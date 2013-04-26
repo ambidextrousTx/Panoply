@@ -6,7 +6,7 @@ Agnostic to whether the record was a string or a csv
 
 from datetime import datetime
 
-class TaskMan(object):
+class Task(object):
     def __init__(self, string):
         """ For simplicity, just year, month and date """
         items = string.strip().split(',')
