@@ -2,6 +2,9 @@
 Defines the class that contains one task's info
 Reads a record with comma separated fields
 Agnostic to whether the record was a string or a csv
+
+Ravi Sinha
+Apr 2013
 """
 
 from datetime import datetime

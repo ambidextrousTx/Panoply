@@ -1,3 +1,8 @@
+"""
+Ravi Sinha
+Apr 2013
+"""
+
 import sys
 import unittest
 sys.path.append('../src/')
