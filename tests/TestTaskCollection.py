@@ -12,11 +12,11 @@ from TasksCollection import TasksCollection
 from Task import Task
 
 class TestTaskCollection(unittest.TestCase):
-    def test_adding_task(self):
-        tasks_collection = TasksCollection()
-        task = Task('Ravi Sinha,Do Laundry,2013,4,25')
-        tasks_collection.add(task)
-        self.assertEqual(str(tasks_collection), task.task_info)
+    def test_constuctor(self):
+        user = 'Ravi Sinha'
+        tasks = TasksCollection(user)
+        self.assertEqual(tasks.user, 'Ravi Sinha')
+        
     
 if __name__ == '__main__':
     unittest.main()

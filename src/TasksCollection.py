@@ -7,13 +7,11 @@ Apr 2013
 """
 
 class TasksCollection(object):
-    def __init__(self):
+    def __init__(self, user):
+        self.user = user
         self.tasks = []
 
     def add(self, task):
         self.tasks.append(task)
 
-    def __str__(self):
-        for task in self.tasks:
-            return task.task_info
 

@@ -13,17 +13,16 @@ class Task(object):
     def __init__(self, string):
         """ For simplicity, just year, month and date """
         items = string.strip().split(',')
-        self.user = items[0]
-        self.task_info = items[1]
-        self.year = items[2]
-        self.month = items[3]
-        self.day = items[4]
+        self.task_info = items[0]
+        self.year = items[1]
+        self.month = items[2]
+        self.day = items[3]
 
     def __str__(self):
-        return '{0}, task {1}, due {2}-{3}-{4}'.format(self.user, self.task_info, self.month, self.day, self.year) 
+        return 'Task {0}, due {1}-{2}-{3}'.format(self.task_info, self.month, self.day, self.year) 
         
     def __repr__(self):
-        return '{0}, task {1}, due {2}-{3}-{4}'.format(self.user, self.task_info, self.month, self.day, self.year) 
+        return 'Task {0}, due {1}-{2}-{3}'.format(self.task_info, self.month, self.day, self.year) 
 
     def is_overdue(self):
         """ Return if the task in question is overdue """
