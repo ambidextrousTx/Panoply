@@ -14,4 +14,14 @@ class TasksCollection(object):
     def add(self, task):
         self.tasks.append(task)
 
+    def scan(self):
+        """ Scan all tasks in tasks[] and report which ones
+        are overdue
+        """
+        overdue_tasks = []
+        for task in self.tasks:
+            if task.is_overdue():
+                overdue_tasks.append(task)
+
+        return overdue_tasks
 

@@ -27,6 +27,10 @@ class TestTaskCollection(unittest.TestCase):
     def test_adding_task(self):
         tasks.add(task_details_obtained)
         self.assertEqual(tasks.tasks[0].task_info, 'Do Laundry')
+
+    def test_overdue_task(self):
+        overdue_tasks = tasks.scan()
+        self.assertEqual(overdue_tasks[0].task_info, 'Do Laundry')
     
 if __name__ == '__main__':
     unittest.main()
