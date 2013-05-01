@@ -12,11 +12,15 @@ from TasksCollection import TasksCollection
 from Task import Task
 
 class TestTaskCollection(unittest.TestCase):
-    def test_constuctor(self):
+    @classmethod
+    def setUpClass(cls):
         user = 'Ravi Sinha'
+        global tasks
         tasks = TasksCollection(user)
+
+    def test_constuctor(self):
         self.assertEqual(tasks.user, 'Ravi Sinha')
-        
+
     
 if __name__ == '__main__':
     unittest.main()
