@@ -24,4 +24,3 @@ class TasksCollection(object):
                 overdue_tasks.append(task)
 
         return overdue_tasks
-
