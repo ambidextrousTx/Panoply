@@ -21,11 +21,21 @@ def print_greeting():
     print('You can create tasks, task collections and see which ones are overdue.', end = '\n')
     print('Press <Enter> by itself to exit.', end = '\n')
 
+def sanity_check(request):  
+    """ For now, see if the first word corresponds to one of the supported
+    operations """
+    return request.split(' ')[0] in ['add', 'scan', 'is_overdue']
+
+def process_request(request):
+    if sanity_check(request):
+        print('I can handle that.', end = '\n')
+
 def run_repl():
     request = 'X'
     while request != '':
         print('Panoply> ', end = '')
         request = raw_input()
+        process_request(request)
     print('Bye.', end = '\n')
 
 def main():
