@@ -19,16 +19,20 @@ def print_greeting():
     print('Welcome to Panoply version {0}'.format(PANOPLY_VERSION), end = '\n')
     print('Created by Ravi Sinha during the summer of 2013', end = '\n')
     print('You can create tasks, task collections and see which ones are overdue.', end = '\n')
+    print('Supported commands: start, load, add, scan', end = '\n')
     print('Press <Enter> by itself to exit.', end = '\n')
 
 def sanity_check(request):  
     """ For now, see if the first word corresponds to one of the supported
     operations """
-    return request.split(' ')[0] in ['add', 'scan', 'is_overdue']
+    return request.split(' ')[0] in ['add', 'scan', 'start', 'load']
 
 def process_request(request):
-    if sanity_check(request):
-        print('I can handle that.', end = '\n')
+    if not sanity_check(request):
+        print('I cannot handle that.', end = '\n')
+    else:
+        pass
+        
 
 def run_repl():
     request = 'X'
