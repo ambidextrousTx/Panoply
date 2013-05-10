@@ -27,11 +27,15 @@ def sanity_check(request):
     operations """
     return request.split(' ')[0] in ['add', 'scan', 'start', 'load']
 
+def get_command(request):
+    return request.split(' ')[0]
+
 def process_request(request):
     if not sanity_check(request):
         print('I cannot handle that.', end = '\n')
+        sys.exit(1)
     else:
-        pass
+        command = get_command(request)
         
 
 def run_repl():
