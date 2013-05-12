@@ -12,16 +12,18 @@ May 3, 2013
 """
 
 from __future__ import print_function
+from TasksCollection import TasksCollection
 import sys
 
 PANOPLY_VERSION = '0.1'
 
-def Panoply(object):
+class Panoply(object):
     def __init__(self):
         self.task_collection_name = ''
 
-    def start(self, name):
+    def start(self, user, name):
         self.task_collection_name = name
+        self.task_collection = TasksCollection(user)
 
     def load(self, name):
         """ Load contents of a previously saved file """
@@ -29,7 +31,11 @@ def Panoply(object):
 
     def add(self, task):
         """ Add one task to the collection """
-        pass
+        if self.task_collection_name == '':
+            print('Error: you need to create the task collection first.', end = '\n')
+            return
+        else:
+            self.task_collection.add(task)
 
     def scan(self):
         """ Scan the collection for any overdue tasks """
@@ -56,6 +62,9 @@ def process_request(request):
         sys.exit(1)
     else:
         command = get_command(request)
+        panoply = Panoply()
+        print('Command received: {0}'.format(command), end = '\n')
+        panoply.__getattribute__(command)
         
 def run_repl():
     request = 'X'
