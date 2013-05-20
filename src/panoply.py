@@ -21,6 +21,7 @@ PANOPLY_VERSION = '0.1'
 class Panoply(object):
     def __init__(self):
         self.task_collection_name = ''
+        self.user= ''
 
     def start(self, user, name):
         self.task_collection_name = name
@@ -34,7 +35,7 @@ class Panoply(object):
     def add(self, task):
         """ Add one task to the collection """
         if self.task_collection_name == '':
-            print('Error: you need to create the task collection first.', end = '\n')
+            print('Error: you need to create the task collection first.', end='\n')
             return
         else:
             self.task_collection.add(task)
@@ -45,11 +46,11 @@ class Panoply(object):
 
 
 def print_greeting():
-    print('Welcome to Panoply version {0}'.format(PANOPLY_VERSION), end = '\n')
-    print('Created by Ravi Sinha during the summer of 2013', end = '\n')
-    print('You can create tasks, task collections and see which ones are overdue.', end = '\n')
-    print('Supported commands: start, load, add, scan', end = '\n')
-    print('Press <Enter> by itself to exit.', end = '\n')
+    print('Welcome to Panoply version {0}'.format(PANOPLY_VERSION), end='\n')
+    print('Created by Ravi Sinha during the summer of 2013', end='\n')
+    print('You can create tasks, task collections and see which ones are overdue.', end='\n')
+    print('Supported commands: start, load, add, scan', end='\n')
+    print('Press <Enter> by itself to exit.', end='\n')
 
 
 def sanity_check(request):
@@ -64,12 +65,12 @@ def get_command(request):
 
 def process_request(request):
     if not sanity_check(request):
-        print('I cannot handle that.', end = '\n')
+        print('I cannot handle that.', end='\n')
         sys.exit(1)
     else:
         command = get_command(request)
         panoply = Panoply()
-        print('Command received: {0}'.format(command), end = '\n')
+        print('Command received: {0}'.format(command), end='\n')
         # Calling the proper method using the string
         result = getattr(panoply, command)()
         print(result, end='\n')
@@ -78,10 +79,10 @@ def process_request(request):
 def run_repl():
     request = 'X'
     while request != '':
-        print('Panoply> ', end = '')
+        print('Panoply> ', end='')
         request = raw_input()
         process_request(request)
-    print('Bye.', end = '\n')
+    print('Bye.', end='\n')
 
 
 def main():
