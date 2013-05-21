@@ -5,8 +5,6 @@ Puts the user in a kind of a REPL
 Allows the user to create TasksCollection's and Task's
 The shell also corresponds to a Panoply object that handles requests
 
-No unit tests for this module, yet
-
 Ambidextrous
 May 3, 2013
 """
@@ -21,16 +19,17 @@ PANOPLY_VERSION = '0.1'
 class Panoply(object):
     def __init__(self):
         self.task_collection_name = ''
-        self.user= ''
+        self.task_collection = ''
+        self.user = ''
 
     def start(self, user, name):
+        self.user = user
         self.task_collection_name = name
         self.task_collection = TasksCollection(user)
-        return 'I am the start method'
 
     def load(self, name):
         """ Load contents of a previously saved file """
-        return 'I am the load method'
+        pass
 
     def add(self, task):
         """ Add one task to the collection """
@@ -42,7 +41,11 @@ class Panoply(object):
 
     def scan(self):
         """ Scan the collection for any overdue tasks """
-        return 'I am the scan method'
+        overdue_tasks = self.task_collection.scan()
+        if len(overdue_tasks) == 0:
+            print('Congratulations, no tasks overdue!', end="\n")
+        else:
+            print('Seems like you need to hustle!', end='\n')
 
 
 def print_greeting():
