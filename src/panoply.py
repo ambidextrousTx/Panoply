@@ -31,6 +31,10 @@ class Panoply(object):
         """ Load contents of a previously saved file """
         pass
 
+    def checkoff(self, task):
+        """ Check off a task from the collection as done """
+        pass
+
     def add(self, task):
         """ Add one task to the collection """
         if self.task_collection_name == '':
@@ -52,7 +56,7 @@ def print_greeting():
     print('Welcome to Panoply version {0}'.format(PANOPLY_VERSION), end='\n')
     print('Created by Ravi Sinha during the summer of 2013', end='\n')
     print('You can create tasks, task collections and see which ones are overdue.', end='\n')
-    print('Supported commands: start, load, add, scan', end='\n')
+    print('Supported commands: start, load, add, scan, checkoff', end='\n')
     print('Press <Enter> by itself to exit.', end='\n')
 
 
