@@ -56,6 +56,7 @@ def print_greeting():
     print('Welcome to Panoply version {0}'.format(PANOPLY_VERSION), end='\n')
     print('Created by Ravi Sinha during the summer of 2013', end='\n')
     print('You can create tasks, task collections and see which ones are overdue.', end='\n')
+    print('You can also check some tasks off as being finished.', end='\n')
     print('Supported commands: start, load, add, scan, checkoff', end='\n')
     print('Press <Enter> by itself to exit.', end='\n')
 
@@ -63,7 +64,7 @@ def print_greeting():
 def sanity_check(request):
     """ For now, see if the first word corresponds to one of the supported
     operations """
-    return request.split(' ')[0] in ['add', 'scan', 'start', 'load']
+    return request.split(' ')[0] in ['add', 'scan', 'start', 'load', 'checkoff', '']
 
 
 def get_command(request):
@@ -75,9 +76,9 @@ def process_request(request):
         print('I cannot handle that.', end='\n')
         sys.exit(1)
     else:
+        print('Command received: {0}'.format(command), end='\n')
         command = get_command(request)
         panoply = Panoply()
-        print('Command received: {0}'.format(command), end='\n')
         # Calling the proper method using the string
         result = getattr(panoply, command)()
         print(result, end='\n')
