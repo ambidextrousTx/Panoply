@@ -76,11 +76,19 @@ def process_request(request):
         print('I cannot handle that.', end='\n')
         sys.exit(1)
     else:
-        print('Command received: {0}'.format(command), end='\n')
         command = get_command(request)
+        print('Command received: {0}'.format(command), end='\n')
         panoply = Panoply()
         # Calling the proper method using the string
-        result = getattr(panoply, command)()
+        # Could not figure out how to use getattr because the methods
+        # have different argument lists
+        result = ''
+        if command == 'start':
+            print('Enter the user name: ', end='\n')
+            user = raw_input()
+            print('Enter the task name: ', end='\n')
+            task = raw_input()
+            result = panoply.start(user, name)
         print(result, end='\n')
 
 
