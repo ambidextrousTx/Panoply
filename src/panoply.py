@@ -21,8 +21,10 @@ class Panoply(object):
         self.task_collection_name = ''
         self.task_collection = ''
         self.user = ''
+        self.status = ''
 
     def start(self, user, name):
+        self.status = 'START'
         self.user = user
         self.task_collection_name = name
         self.task_collection = TasksCollection(user)
