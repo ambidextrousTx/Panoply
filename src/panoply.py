@@ -31,14 +31,17 @@ class Panoply(object):
 
     def load(self, name):
         """ Load contents of a previously saved file """
+        self.status = 'LOAD'
         pass
 
     def checkoff(self, task):
         """ Check off a task from the collection as done """
+        self.status = 'CHECKOFF'
         pass
 
     def add(self, task):
         """ Add one task to the collection """
+        self.status = 'ADD'
         if self.task_collection_name == '':
             print('Error: you need to create the task collection first.', end='\n')
             return
@@ -47,6 +50,7 @@ class Panoply(object):
 
     def scan(self):
         """ Scan the collection for any overdue tasks """
+        self.status = 'SCAN'
         overdue_tasks = self.task_collection.scan()
         if len(overdue_tasks) == 0:
             print('Congratulations, no tasks overdue!', end="\n")
