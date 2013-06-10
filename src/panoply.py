@@ -95,6 +95,15 @@ def process_request(request):
             print('Enter the task name: ', end='\n')
             task = raw_input()
             result = panoply.start(user, name)
+        elif command == 'add':
+            if panoply.status != 'START':
+                raise InvalidStateException
+            else:
+                print('Enter the task info: ', end='\n')
+                task_info = raw_input()
+                print('Enter the date (yyyy-mm-dd): ', end='\n')
+                date = raw_input()
+
         print(result, end='\n')
 
 
