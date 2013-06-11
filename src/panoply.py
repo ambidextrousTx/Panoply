@@ -77,6 +77,24 @@ def get_command(request):
     return request.split(' ')[0]
 
 
+def start(panoply):
+    print('Enter the user name: ', end='\n')
+    user = raw_input()
+    print('Enter the task name: ', end='\n')
+    task = raw_input()
+    result = panoply.start(user, name)
+
+
+def add(panoply):
+    if panoply.status != 'START':
+        raise InvalidStateException
+    else:
+        print('Enter the task info: ', end='\n')
+        task_info = raw_input()
+        print('Enter the date (yyyy-mm-dd): ', end='\n')
+        date = raw_input()
+
+
 def process_request(request):
     if not sanity_check(request):
         print('I cannot handle that.', end='\n')
@@ -90,19 +108,9 @@ def process_request(request):
         # have different argument lists
         result = ''
         if command == 'start':
-            print('Enter the user name: ', end='\n')
-            user = raw_input()
-            print('Enter the task name: ', end='\n')
-            task = raw_input()
-            result = panoply.start(user, name)
+            start(panoply)
         elif command == 'add':
-            if panoply.status != 'START':
-                raise InvalidStateException
-            else:
-                print('Enter the task info: ', end='\n')
-                task_info = raw_input()
-                print('Enter the date (yyyy-mm-dd): ', end='\n')
-                date = raw_input()
+            add(panoply)
 
         print(result, end='\n')
 
