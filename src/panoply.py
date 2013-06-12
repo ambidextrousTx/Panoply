@@ -95,6 +95,10 @@ def add(panoply):
         date = raw_input()
 
 
+def checkoff(panoply):
+    pass
+
+
 def process_request(request):
     if not sanity_check(request):
         print('I cannot handle that.', end='\n')
@@ -111,6 +115,12 @@ def process_request(request):
             start(panoply)
         elif command == 'add':
             add(panoply)
+        elif command == 'checkoff':
+            checkoff(panoply)
+        elif command == 'scan':
+            checkoff(panoply)
+        elif command == 'load':
+            checkoff(panoply)
 
         print(result, end='\n')
 
