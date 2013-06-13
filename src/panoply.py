@@ -11,6 +11,7 @@ May 3, 2013
 
 from __future__ import print_function
 from TasksCollection import TasksCollection
+from panlib import InvalidStateException
 import sys
 
 PANOPLY_VERSION = '0.1'
@@ -86,6 +87,7 @@ def start(panoply):
 
 
 def add(panoply):
+    # Can only add if the status is START
     if panoply.status != 'START':
         raise InvalidStateException
     else:
@@ -96,7 +98,11 @@ def add(panoply):
 
 
 def checkoff(panoply):
-    pass
+    # Can only add if the status is LOAD or ADD
+    if panoply.status not in ['LOAD', 'ADD']:
+        raise InvalidStateException
+    else:
+        pass
 
 
 def process_request(request):
