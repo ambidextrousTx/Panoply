@@ -44,7 +44,8 @@ class Panoply(object):
         """ Add one task to the collection """
         self.status = 'ADD'
         if self.task_collection_name == '':
-            print('Error: you need to create the task collection first.', end='\n')
+            print('Error: you need to create the task collection first.',
+                  end='\n')
             return
         else:
             self.task_collection.add(task)
@@ -58,20 +59,29 @@ class Panoply(object):
         else:
             print('Seems like you need to hustle!', end='\n')
 
+    def save(self):
+        """ Save the current task collection on disk """
+        pass
+
 
 def print_greeting():
     print('Welcome to Panoply version {0}'.format(PANOPLY_VERSION), end='\n')
     print('Created by Ravi Sinha during the summer of 2013', end='\n')
-    print('You can create tasks, task collections and see which ones are overdue.', end='\n')
+    print('You can create tasks, task collections and see which ones
+          are overdue.', end='\n')
+    print('It is possible to save a collection and also load it later',
+          end='\n')
     print('You can also check some tasks off as being finished.', end='\n')
-    print('Supported commands: start, load, add, scan, checkoff', end='\n')
+    print('Supported commands: start, load, add, scan, checkoff, save',
+          end='\n')
     print('Press <Enter> by itself to exit.', end='\n')
 
 
 def sanity_check(request):
     """ For now, see if the first word corresponds to one of the supported
     operations """
-    return request.split(' ')[0] in ['add', 'scan', 'start', 'load', 'checkoff', '']
+    return request.split(' ')[0] in ['add', 'scan', 'start', 'load',
+                                     'checkoff', 'save', '']
 
 
 def get_command(request):
@@ -127,6 +137,8 @@ def process_request(request):
             checkoff(panoply)
         elif command == 'load':
             checkoff(panoply)
+        elif command == 'save':
+            save(panoply)
 
         print(result, end='\n')
 
