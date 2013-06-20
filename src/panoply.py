@@ -24,10 +24,14 @@ class Panoply(object):
         self.user = ''
         self.status = ''
 
-    def start(self, user, name):
+    def start(self):
         self.status = 'START'
+        print('Enter the user name: ', end='\n')
+        user = raw_input()
+        print('Enter the task name: ', end='\n')
+        task = raw_input()
         self.user = user
-        self.task_collection_name = name
+        self.task_collection_name = task
         self.task_collection = TasksCollection(user)
 
     def load(self, name):
@@ -41,14 +45,18 @@ class Panoply(object):
         pass
 
     def add(self, task):
-        """ Add one task to the collection """
-        self.status = 'ADD'
-        if self.task_collection_name == '':
-            print('Error: you need to create the task collection first.',
-                  end='\n')
-            return
+        """ Add one task to the collection.
+        Can only add if the status is START
+        """
+        if self.status != 'START':
+            raise InvalidStateException
         else:
-            self.task_collection.add(task)
+            self.status = 'ADD'
+            print('Enter the task info: ', end='\n')
+            task_info = raw_input()
+            print('Enter the date (yyyy-mm-dd): ', end='\n')
+            date = raw_input()
+
 
     def scan(self):
         """ Scan the collection for any overdue tasks """
@@ -88,25 +96,6 @@ def get_command(request):
     return request.split(' ')[0]
 
 
-def start(panoply):
-    print('Enter the user name: ', end='\n')
-    user = raw_input()
-    print('Enter the task name: ', end='\n')
-    task = raw_input()
-    result = panoply.start(user, name)
-
-
-def add(panoply):
-    # Can only add if the status is START
-    if panoply.status != 'START':
-        raise InvalidStateException
-    else:
-        print('Enter the task info: ', end='\n')
-        task_info = raw_input()
-        print('Enter the date (yyyy-mm-dd): ', end='\n')
-        date = raw_input()
-
-
 def checkoff(panoply):
     # Can only add if the status is LOAD or ADD
     if panoply.status not in ['LOAD', 'ADD']:
@@ -128,9 +117,9 @@ def process_request(request):
         # have different argument lists
         result = ''
         if command == 'start':
-            start(panoply)
+            panoply.start()
         elif command == 'add':
-            add(panoply)
+            panoply.add()
         elif command == 'checkoff':
             checkoff(panoply)
         elif command == 'scan':
