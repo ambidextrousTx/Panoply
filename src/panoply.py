@@ -10,10 +10,11 @@ May 3, 2013
 """
 
 from __future__ import print_function
-from TasksCollection import TasksCollection
-from panlib import InvalidStateException
 import sys
+import csv
 from Task import Task
+from panlib import InvalidStateException
+from TasksCollection import TasksCollection
 
 PANOPLY_VERSION = '0.1'
 
@@ -70,7 +71,10 @@ class Panoply(object):
 
     def save(self):
         """ Save the current task collection on disk """
-        pass
+        with open('panoply_tasks.pan', 'w') as csvfile:
+            taskwriter = csv.writer(csvfile, delimiter=',',
+                                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            taskwriter.writerow(['test', 'test'])
 
 
 def print_greeting():
