@@ -13,6 +13,7 @@ from __future__ import print_function
 from TasksCollection import TasksCollection
 from panlib import InvalidStateException
 import sys
+from Task import Task
 
 PANOPLY_VERSION = '0.1'
 
@@ -28,7 +29,7 @@ class Panoply(object):
         self.status = 'START'
         print('Enter the user name: ', end='\n')
         user = raw_input()
-        print('Enter the task name: ', end='\n')
+        print('Enter the task collection name: ', end='\n')
         task = raw_input()
         self.user = user
         self.task_collection_name = task
@@ -44,7 +45,7 @@ class Panoply(object):
         self.status = 'CHECKOFF'
         pass
 
-    def add(self, task):
+    def add(self):
         """ Add one task to the collection.
         Can only add if the status is START
         """
@@ -54,9 +55,9 @@ class Panoply(object):
             self.status = 'ADD'
             print('Enter the task info: ', end='\n')
             task_info = raw_input()
-            print('Enter the date (yyyy-mm-dd): ', end='\n')
+            print('Enter the date (yyyy,mm,dd): ', end='\n')
             date = raw_input()
-
+            self.task_collection.add(Task('{0},{1}'.format(task_info, date)))
 
     def scan(self):
         """ Scan the collection for any overdue tasks """
@@ -75,8 +76,8 @@ class Panoply(object):
 def print_greeting():
     print('Welcome to Panoply version {0}'.format(PANOPLY_VERSION), end='\n')
     print('Created by Ravi Sinha during the summer of 2013', end='\n')
-    print('You can create tasks, task collections and see which ones
-          are overdue.', end='\n')
+    print('You can create tasks, task collections and see which ones'
+          'are overdue.', end='\n')
     print('It is possible to save a collection and also load it later',
           end='\n')
     print('You can also check some tasks off as being finished.', end='\n')
@@ -104,14 +105,13 @@ def checkoff(panoply):
         pass
 
 
-def process_request(request):
+def process_request(request, panoply):
     if not sanity_check(request):
         print('I cannot handle that.', end='\n')
         sys.exit(1)
     else:
         command = get_command(request)
         print('Command received: {0}'.format(command), end='\n')
-        panoply = Panoply()
         # Calling the proper method using the string
         # Could not figure out how to use getattr because the methods
         # have different argument lists
@@ -121,23 +121,26 @@ def process_request(request):
         elif command == 'add':
             panoply.add()
         elif command == 'checkoff':
-            checkoff(panoply)
+            panoply.checkoff()
         elif command == 'scan':
-            checkoff(panoply)
+            panoply.scan()
         elif command == 'load':
-            checkoff(panoply)
+            panoply.load()
         elif command == 'save':
-            save(panoply)
+            panoply.save()
 
         print(result, end='\n')
 
 
 def run_repl():
     request = 'X'
+    panoply = Panoply()
     while request != '':
         print('Panoply> ', end='')
         request = raw_input()
-        process_request(request)
+
+        # Needs must keep the same object for state to work
+        process_request(request, panoply)
     print('Bye.', end='\n')
 
 
