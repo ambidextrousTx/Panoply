@@ -71,11 +71,11 @@ class Panoply(object):
 
     def save(self):
         """ Save the current task collection on disk """
-        self.status = 'SAVE'
-        with open('panoply_tasks.pan', 'w') as csvfile:
+        with open('panoply_tasks.pan', 'a') as csvfile:
             taskwriter = csv.writer(csvfile, delimiter=',',
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            taskwriter.writerow(['test', 'test'])
+            for task in self.task_collection.tasks:
+                taskwriter.writerow([self.user, self.task_collection_name, task.task_info, task.year, task.month, task.day])
 
 
 def print_greeting():
