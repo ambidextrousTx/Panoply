@@ -38,8 +38,10 @@ class Panoply(object):
 
     def load(self, name):
         """ Load contents of a previously saved file """
+        """ Currently supporting only one file """
         self.status = 'LOAD'
-        pass
+        with open('panoply_tasks.pan', 'a') as csvfile:
+            pass
 
     def checkoff(self, task):
         """ Check off a task from the collection as done """
