@@ -36,12 +36,15 @@ class Panoply(object):
         self.task_collection_name = task
         self.task_collection = TasksCollection(user)
 
-    def load(self, name):
+    def load(self):
         """ Load contents of a previously saved file """
         """ Currently supporting only one file """
         self.status = 'LOAD'
-        with open('panoply_tasks.pan', 'a') as csvfile:
-            pass
+        with open('panoply_tasks.pan', 'r') as csvfile:
+            taskreader = csv.reader(csvfile, delimiter=',',
+                                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            for row in taskreader:
+                print(', '.join(row), end='\n')
 
     def checkoff(self, task):
         """ Check off a task from the collection as done """
