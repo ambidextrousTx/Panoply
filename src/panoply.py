@@ -45,6 +45,7 @@ class Panoply(object):
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for row in taskreader:
                 print(', '.join(row), end='\n')
+        print('Done loading from file panoply_tasks.pan', end='\n')
 
     def checkoff(self, task):
         """ Check off a task from the collection as done """
@@ -81,12 +82,13 @@ class Panoply(object):
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for task in self.task_collection.tasks:
                 taskwriter.writerow([self.user, self.task_collection_name, task.task_info, task.year, task.month, task.day])
+        print('Done saving to file panoply_tasks.pan', end='\n')
 
 
 def print_greeting():
     print('Welcome to Panoply version {0}'.format(PANOPLY_VERSION), end='\n')
     print('Created by Ravi Sinha during the summer of 2013', end='\n')
-    print('You can create tasks, task collections and see which ones'
+    print('You can create tasks or task collections, and see which ones '
           'are overdue.', end='\n')
     print('It is possible to save a collection and also load it later',
           end='\n')
