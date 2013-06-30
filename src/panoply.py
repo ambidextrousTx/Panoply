@@ -114,7 +114,10 @@ def checkoff(panoply):
     if panoply.status not in ['LOAD', 'ADD']:
         raise InvalidStateException
     else:
-        pass
+        print('Enter the task info to check off:', end='\n')
+        task = raw_input()
+        # Add logic to check if the task exists
+        # Add logic to delete task
 
 
 def process_request(request, panoply):
@@ -127,7 +130,6 @@ def process_request(request, panoply):
         # Calling the proper method using the string
         # Could not figure out how to use getattr because the methods
         # have different argument lists
-        result = ''
         if command == 'start':
             panoply.start()
         elif command == 'add':
@@ -140,8 +142,6 @@ def process_request(request, panoply):
             panoply.load()
         elif command == 'save':
             panoply.save()
-
-        print(result, end='\n')
 
 
 def run_repl():
