@@ -49,8 +49,15 @@ class Panoply(object):
 
     def checkoff(self, task):
         """ Check off a task from the collection as done """
-        self.status = 'CHECKOFF'
-        pass
+        # Can only add if the status is LOAD or ADD
+        if panoply.status not in ['LOAD', 'ADD']:
+            raise InvalidStateException
+        else:
+            self.status = 'CHECKOFF'
+            print('Enter the task info to check off:', end='\n')
+            task = raw_input()
+            # Add logic to check if the task exists
+            # Add logic to delete task
 
     def add(self):
         """ Add one task to the collection.
@@ -107,17 +114,6 @@ def sanity_check(request):
 
 def get_command(request):
     return request.split(' ')[0]
-
-
-def checkoff(panoply):
-    # Can only add if the status is LOAD or ADD
-    if panoply.status not in ['LOAD', 'ADD']:
-        raise InvalidStateException
-    else:
-        print('Enter the task info to check off:', end='\n')
-        task = raw_input()
-        # Add logic to check if the task exists
-        # Add logic to delete task
 
 
 def process_request(request, panoply):
