@@ -47,16 +47,31 @@ class Panoply(object):
                 print(', '.join(row), end='\n')
         print('Done loading from file panoply_tasks.pan', end='\n')
 
-    def checkoff(self, task):
+    def checkoff(self):
         """ Check off a task from the collection as done """
         # Can only add if the status is LOAD or ADD
-        if panoply.status not in ['LOAD', 'ADD']:
+        if self.status not in ['LOAD', 'ADD']:
             raise InvalidStateException
         else:
             self.status = 'CHECKOFF'
+            print('What collection?', end='\n')
+            coll = raw_input()
             print('Enter the task info to check off:', end='\n')
             task = raw_input()
             # Add logic to check if the task exists
+            # Sequential search for now
+            with open('panoply_tasks.pan', 'r') as csvfile:
+                taskreader = csv.reader(csvfile, delimiter=',',
+                                        quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                for row in taskreader:
+                    task_coll = row[1]
+                    task_info = row[2]
+                    if task_coll == coll and task_info == task:
+                        print('Found the task!')
+                        return
+            print('Task not found!')
+
+
             # Add logic to delete task
 
     def add(self):
