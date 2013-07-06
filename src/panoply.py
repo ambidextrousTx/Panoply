@@ -6,7 +6,7 @@ Allows the user to create TasksCollection's and Task's
 The shell also corresponds to a Panoply object that handles requests
 
 Ambidextrous
-May 3, 2013
+Summer, 2013
 """
 
 from __future__ import print_function
@@ -70,8 +70,6 @@ class Panoply(object):
                         print('Found the task!')
                         return
             print('Task not found!')
-
-
             # Add logic to delete task
 
     def add(self):
@@ -96,6 +94,8 @@ class Panoply(object):
             print('Congratulations, no tasks overdue!', end="\n")
         else:
             print('Seems like you need to hustle!', end='\n')
+            for task in overdue_tasks:
+                print('{0}'.format(task.task_info), end='\n')
 
     def save(self):
         """ Save the current task collection on disk """
