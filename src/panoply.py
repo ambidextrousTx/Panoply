@@ -60,6 +60,7 @@ class Panoply(object):
             task = raw_input()
             # Add logic to check if the task exists
             # Sequential search for now
+            flag = False
             with open('panoply_tasks.pan', 'r') as csvfile:
                 taskreader = csv.reader(csvfile, delimiter=',',
                                         quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -68,9 +69,17 @@ class Panoply(object):
                     task_info = row[2]
                     if task_coll == coll and task_info == task:
                         print('Found the task!')
-                        return
-            print('Task not found!')
-            # Add logic to delete task
+                        flag = True
+                        break
+            if flag:
+                # Add logic to delete task
+                taskreader = csv.reader(open('panoply_tasks.pan', 'r'), delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                writer = csv.writer(open('corrected.csv', 'w'), delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                for row in taskreader:
+                    if not (row[1] == task_coll and row[2] == task_info):
+                        writer.writerow(row)
+            else:
+                print('Task not found!')
 
     def add(self):
         """ Add one task to the collection.
