@@ -15,6 +15,7 @@ import csv
 from Task import Task
 from panlib import InvalidStateException
 from TasksCollection import TasksCollection
+from commands import getstatusoutput
 
 PANOPLY_VERSION = '0.1'
 
@@ -78,6 +79,9 @@ class Panoply(object):
                 for row in taskreader:
                     if not (row[1] == task_coll and row[2] == task_info):
                         writer.writerow(row)
+                # Move old file to new
+                moved = getstatusoutput('mv corrected.csv panoply_tasks.pan')
+
             else:
                 print('Task not found!')
 
