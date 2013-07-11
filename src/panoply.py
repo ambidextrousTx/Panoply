@@ -41,13 +41,17 @@ class Panoply(object):
         """ Load contents of a previously saved file """
         """ Currently supporting only one file """
         self.status = 'LOAD'
+        # Reload everything from the file into the object
+        self.task_collection = ''
+        self.task_collection_name = ''
+        self.user = ''
         with open('panoply_tasks.pan', 'r') as csvfile:
             taskreader = csv.reader(csvfile, delimiter=',',
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
             # Loading tasks from file into object and printing
             for row in taskreader:
                 print(', '.join(row), end='\n')
-                self.
+                self.task_collection.add
         
         print('\nDone loading from file panoply_tasks.pan', end='\n')
 
