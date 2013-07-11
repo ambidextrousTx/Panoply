@@ -46,7 +46,7 @@ class Panoply(object):
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for row in taskreader:
                 print(', '.join(row), end='\n')
-        print('Done loading from file panoply_tasks.pan', end='\n')
+        print('\nDone loading from file panoply_tasks.pan', end='\n')
 
     def checkoff(self):
         """ Check off a task from the collection as done """
@@ -69,7 +69,8 @@ class Panoply(object):
                     task_coll = row[1]
                     task_info = row[2]
                     if task_coll == coll and task_info == task:
-                        print('Found the task!')
+                        print('\nFound the task!', end='\n')
+                        print('Checking off the task ... done', end='\n')
                         flag = True
                         break
             if flag:
@@ -104,9 +105,9 @@ class Panoply(object):
         self.status = 'SCAN'
         overdue_tasks = self.task_collection.scan()
         if len(overdue_tasks) == 0:
-            print('Congratulations, no tasks overdue!', end="\n")
+            print('\nCongratulations, no tasks overdue!', end="\n")
         else:
-            print('Seems like you need to hustle!', end='\n')
+            print('\nSeems like you need to hustle!', end='\n')
             for task in overdue_tasks:
                 print('{0}'.format(task.task_info), end='\n')
 
@@ -117,7 +118,7 @@ class Panoply(object):
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for task in self.task_collection.tasks:
                 taskwriter.writerow([self.user, self.task_collection_name, task.task_info, task.year, task.month, task.day])
-        print('Done saving to file panoply_tasks.pan', end='\n')
+        print('\nDone saving to file panoply_tasks.pan', end='\n')
 
 
 def print_greeting():
