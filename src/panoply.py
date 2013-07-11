@@ -44,8 +44,11 @@ class Panoply(object):
         with open('panoply_tasks.pan', 'r') as csvfile:
             taskreader = csv.reader(csvfile, delimiter=',',
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            # Loading tasks from file into object and printing
             for row in taskreader:
                 print(', '.join(row), end='\n')
+                self.
+        
         print('\nDone loading from file panoply_tasks.pan', end='\n')
 
     def checkoff(self):
@@ -90,7 +93,7 @@ class Panoply(object):
         """ Add one task to the collection.
         Can only add if the status is START
         """
-        if self.status != 'START':
+        if self.status not in ['START', 'LOAD']:
             raise InvalidStateException
         else:
             self.status = 'ADD'
