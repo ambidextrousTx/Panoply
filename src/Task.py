@@ -13,10 +13,10 @@ class Task(object):
     def __init__(self, string):
         """ For simplicity, just year, month and date """
         items = string.strip().split(',')
-        self.task_info = items[0]
-        self.year = items[1]
-        self.month = items[2]
-        self.day = items[3]
+        self.task_info = items[2]
+        self.year = items[3]
+        self.month = items[4]
+        self.day = items[5]
 
     def __str__(self):
         return 'Task {0}, due {1}-{2}-{3}'.format(self.task_info, self.month, self.day, self.year) 
