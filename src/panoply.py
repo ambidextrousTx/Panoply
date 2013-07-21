@@ -42,8 +42,8 @@ class Panoply(object):
         """ Currently supporting only one file """
         self.status = 'LOAD'
         # Reload everything from the file into the object
-        self.task_collection = ''
-        self.task_collection_name = ''
+        self.task_collection = None
+        self.task_collection_name = None
         self.user = ''
         with open('panoply_tasks.pan', 'r') as csvfile:
             taskreader = csv.reader(csvfile, delimiter=',',
@@ -51,7 +51,7 @@ class Panoply(object):
             # Loading tasks from file into object and printing
             for row in taskreader:
                 print(', '.join(row), end='\n')
-                self.task_collection.add
+                self.task_collection.add(Task(','.join(row)))
         
         print('\nDone loading from file panoply_tasks.pan', end='\n')
 

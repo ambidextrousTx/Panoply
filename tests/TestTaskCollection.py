@@ -11,6 +11,7 @@ sys.path.append('../src/')
 from TasksCollection import TasksCollection
 from Task import Task
 
+
 class TestTaskCollection(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -18,11 +19,12 @@ class TestTaskCollection(unittest.TestCase):
         global task_details_obtained
         user = 'Ravi Sinha'
         task = 'Do Laundry,2013,4,25'
-        tasks = TasksCollection(user)
+        name = 'TestTask'
+        tasks = TasksCollection(name)
         task_details_obtained = Task(task)
 
     def test_constuctor(self):
-        self.assertEqual(tasks.user, 'Ravi Sinha')
+        self.assertEqual(tasks.name, 'TestTask')
 
     def test_adding_task(self):
         tasks.add(task_details_obtained)
@@ -31,6 +33,6 @@ class TestTaskCollection(unittest.TestCase):
     def test_overdue_task(self):
         overdue_tasks = tasks.scan()
         self.assertEqual(overdue_tasks[0].task_info, 'Do Laundry')
-    
+
 if __name__ == '__main__':
     unittest.main()
