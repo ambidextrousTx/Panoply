@@ -8,11 +8,12 @@ import unittest
 sys.path.append('../src/')
 from Task import Task
 
+
 class TestTask(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         global task_details_obtained
-        task = 'Do Laundry,2013,4,25'
+        task = ',,Do Laundry,2013,4,25'
         task_details_obtained = Task(task)
 
     def test_constructor_string(self):
@@ -32,11 +33,11 @@ class TestTask(unittest.TestCase):
 
     def test_overdue(self):
         """ Test the overdue test """
-        self.assertTrue(task_details_obtained.is_overdue()) 
+        self.assertTrue(task_details_obtained.is_overdue())
 
     def test_overdue_negative(self):
         """ Test when not overdue """
-        task = 'Fly to Moon,9999,4,25'
+        task = ',,Fly to Moon,9999,4,25'
         task_details_obtained = Task(task)
         self.assertFalse(task_details_obtained.is_overdue())
 
