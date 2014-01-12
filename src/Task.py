@@ -9,6 +9,7 @@ Apr 2013
 
 from datetime import datetime
 
+
 class Task(object):
     def __init__(self, string):
         """ For simplicity, just year, month and date """
@@ -20,7 +21,7 @@ class Task(object):
 
     def __str__(self):
         return 'Task {0}, due {1}-{2}-{3}'.format(self.task_info, self.month, self.day, self.year) 
-        
+
     def __repr__(self):
         return 'Task {0}, due {1}-{2}-{3}'.format(self.task_info, self.month, self.day, self.year) 
 
@@ -29,4 +30,3 @@ class Task(object):
         date = datetime.now()
         due_date = datetime(int(self.year), int(self.month), int(self.day), 23, 59, 59)
         return date > due_date
-        

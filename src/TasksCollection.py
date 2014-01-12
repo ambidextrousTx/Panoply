@@ -8,9 +8,9 @@ Apr 2013
 
 
 class TasksCollection(object):
-    def __init__(self, name):
+    def __init__(self, name, user):
         self.name = name
-        self.user = None
+        self.user = user
         self.tasks = []
 
     def add(self, task):

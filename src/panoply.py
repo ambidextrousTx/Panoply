@@ -13,9 +13,9 @@ from __future__ import print_function
 import sys
 import csv
 from Task import Task
+from commands import getstatusoutput
 from panlib import InvalidStateException
 from TasksCollection import TasksCollection
-from commands import getstatusoutput
 
 PANOPLY_VERSION = '0.1'
 
@@ -35,7 +35,10 @@ class Panoply(object):
         task = raw_input()
         self.user = user
         self.task_collection_name = task
-        self.task_collection = TasksCollection(user)
+        self.task_collection = TasksCollection(task, user)
+
+        response = 'Created a new collection {0} for user {1}'.format(task, user)
+        print(response)
 
     def load(self):
         """ Load contents of a previously saved file """
@@ -101,11 +104,11 @@ class Panoply(object):
             raise InvalidStateException
         else:
             self.status = 'ADD'
-            print('Enter the task info: ', end='\n')
+            print('Enter the task details: ', end='\n')
             task_info = raw_input()
             print('Enter the date (yyyy,mm,dd): ', end='\n')
             date = raw_input()
-            self.task_collection.add(Task('{0},{1}'.format(task_info, date)))
+            self.task_collection.add(Task(',,{0},{1}'.format(task_info, date)))
 
     def scan(self):
         """ Scan the collection for any overdue tasks """
@@ -136,16 +139,16 @@ def print_greeting():
     print('It is possible to save a collection and also load it later',
           end='\n')
     print('You can also check some tasks off as being finished.', end='\n')
-    print('Supported commands: start, load, add, scan, checkoff, save',
-          end='\n')
-    print('Press <Enter> by itself to exit.', end='\n')
+
+def print_help():
+    print('Supported commands: start, load, add, scan, checkoff, save, help', end='\n')
+    print('Press <Enter> by itself or enter quit, exit, etc. to exit.', end='\n')
 
 
 def sanity_check(request):
     """ For now, see if the first word corresponds to one of the supported
     operations """
-    return request.split(' ')[0] in ['add', 'scan', 'start', 'load',
-                                     'checkoff', 'save', '']
+    return request.split(' ')[0] in ['add', 'scan', 'start', 'load', 'checkoff', 'save', '', 'bye', 'quit', 'exit', 'q', 'help']
 
 
 def get_command(request):
@@ -174,12 +177,14 @@ def process_request(request, panoply):
             panoply.load()
         elif command == 'save':
             panoply.save()
+        elif command == 'help':
+            print_help()
 
 
 def run_repl():
     request = 'X'
     panoply = Panoply()
-    while request != '':
+    while request not in ['', 'exit', 'quit', 'q', 'bye']:
         print('Panoply> ', end='')
         request = raw_input()
 
@@ -190,6 +195,7 @@ def run_repl():
 
 def main():
     print_greeting()
+    print_help()
     run_repl()
 
 if __name__ == '__main__':

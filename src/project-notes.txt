@@ -1,3 +1,4 @@
 - needs delete functionality
+- needs autosaving upon deletion, checkoff, or anything else
 - needs to use the calendar module
 - needs major refactoring
