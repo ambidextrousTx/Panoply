@@ -110,6 +110,12 @@ class Panoply(object):
             date = raw_input()
             self.task_collection.add(Task(',,{0},{1}'.format(task_info, date)))
 
+    def delete(self):
+        """ Delete a given task from the collection.
+        Can only delete if the status is ADD?
+        """
+        pass
+
     def scan(self):
         """ Scan the collection for any overdue tasks """
         self.status = 'SCAN'
@@ -141,14 +147,14 @@ def print_greeting():
     print('You can also check some tasks off as being finished.', end='\n')
 
 def print_help():
-    print('Supported commands: start, load, add, scan, checkoff, save, help', end='\n')
+    print('Supported commands: start, load, add, delete, scan, checkoff, save, help', end='\n')
     print('Press <Enter> by itself or enter quit, exit, etc. to exit.', end='\n')
 
 
 def sanity_check(request):
     """ For now, see if the first word corresponds to one of the supported
     operations """
-    return request.split(' ')[0] in ['add', 'scan', 'start', 'load', 'checkoff', 'save', '', 'bye', 'quit', 'exit', 'q', 'help']
+    return request.split(' ')[0] in ['add', 'scan', 'start', 'load', 'checkoff', 'save', '', 'bye', 'quit', 'exit', 'q', 'help', 'delete']
 
 
 def get_command(request):
@@ -177,6 +183,8 @@ def process_request(request, panoply):
             panoply.load()
         elif command == 'save':
             panoply.save()
+        elif command == 'delete':
+            print('Not implemented yet')
         elif command == 'help':
             print_help()
 
