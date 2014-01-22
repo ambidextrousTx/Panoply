@@ -109,6 +109,7 @@ class Panoply(object):
             print('Enter the date (yyyy,mm,dd): ', end='\n')
             date = raw_input()
             self.task_collection.add(Task(',,{0},{1}'.format(task_info, date)))
+            self.save()
 
     def delete(self):
         """ Delete a given task from the collection.

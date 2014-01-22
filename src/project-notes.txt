@@ -1,5 +1,4 @@
-- needs delete functionality
-- needs autosaving upon deletion, checkoff, or anything else
+- needs delete functionality - added stub
 - needs to use the calendar module
 - needs major refactoring
 - better handling of collections, users, and the saved file - one file per user?
