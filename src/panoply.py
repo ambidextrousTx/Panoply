@@ -46,22 +46,21 @@ class Panoply(object):
         self.status = 'LOAD'
         # Reload everything from the file into the object
         self.task_collection_name = 'NewCollection'
-        self.task_collection = TasksCollection(self.task_collection_name)
-        self.user = ''
+        self.user = 'NewUser'
+        self.task_collection = TasksCollection(self.task_collection_name, self.user)
         with open('panoply_tasks.pan', 'r') as csvfile:
-            taskreader = csv.reader(csvfile, delimiter=',',
-                                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            taskreader = csv.reader(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             # Loading tasks from file into object and printing
             for row in taskreader:
                 print(', '.join(row), end='\n')
                 self.task_collection.add(Task(','.join(row)))
-        
+
         print('\nDone loading from file panoply_tasks.pan', end='\n')
 
     def checkoff(self):
         """ Check off a task from the collection as done """
-        # Can only add if the status is LOAD or ADD
-        if self.status not in ['LOAD', 'ADD']:
+        # Can only add if the status is LOAD or ADD or CHECKOFF
+        if self.status not in ['LOAD', 'ADD', 'CHECKOFF']:
             raise InvalidStateException
         else:
             self.status = 'CHECKOFF'
@@ -73,8 +72,7 @@ class Panoply(object):
             # Sequential search for now
             flag = False
             with open('panoply_tasks.pan', 'r') as csvfile:
-                taskreader = csv.reader(csvfile, delimiter=',',
-                                        quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                taskreader = csv.reader(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
                 for row in taskreader:
                     task_coll = row[1]
                     task_info = row[2]
@@ -98,9 +96,9 @@ class Panoply(object):
 
     def add(self):
         """ Add one task to the collection.
-        Can only add if the status is START
+        Can only add if the status is START, LOAD, CHECKOFF
         """
-        if self.status not in ['START', 'LOAD']:
+        if self.status not in ['START', 'LOAD', 'CHECKOFF']:
             raise InvalidStateException
         else:
             self.status = 'ADD'
@@ -130,9 +128,9 @@ class Panoply(object):
 
     def save(self):
         """ Save the current task collection on disk """
-        with open('panoply_tasks.pan', 'a') as csvfile:
+        with open('panoply_tasks.pan', 'w') as csvfile:
             taskwriter = csv.writer(csvfile, delimiter=',',
-                                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for task in self.task_collection.tasks:
                 taskwriter.writerow([self.user, self.task_collection_name, task.task_info, task.year, task.month, task.day])
         print('\nDone saving to file panoply_tasks.pan', end='\n')
@@ -142,9 +140,9 @@ def print_greeting():
     print('Welcome to Panoply version {0}'.format(PANOPLY_VERSION), end='\n')
     print('Created by Ravi Sinha during the summer of 2013', end='\n')
     print('You can create tasks or task collections, and see which ones '
-          'are overdue.', end='\n')
+            'are overdue.', end='\n')
     print('It is possible to save a collection and also load it later',
-          end='\n')
+            end='\n')
     print('You can also check some tasks off as being finished.', end='\n')
 
 def print_help():
