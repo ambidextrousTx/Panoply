@@ -126,6 +126,21 @@ class Panoply(object):
             for task in overdue_tasks:
                 print('{0}'.format(task.task_info), end='\n')
 
+    def display(self):
+        ''' Just displays the contents of the currently loaded or used
+        collection '''
+        if self.status not in ['LOAD', 'ADD', 'SCAN', 'CHECKOFF']:
+            print('\nNothing to display yet.', end='\n')
+        else:
+            for task in self.task_collection.tasks:
+                print('', end='\n')
+                print(self.task_collection.user, end=',')
+                print(self.task_collection_name, end=',')
+                print(task.task_info, end=',')
+                print(task.year, end=',')
+                print(task.month, end=',')
+                print(task.day, end='\n')
+
     def save(self):
         """ Save the current task collection on disk """
         with open('panoply_tasks.pan', 'w') as csvfile:
@@ -153,7 +168,7 @@ def print_help():
 def sanity_check(request):
     """ For now, see if the first word corresponds to one of the supported
     operations """
-    return request.split(' ')[0] in ['add', 'scan', 'start', 'load', 'checkoff', 'save', '', 'bye', 'quit', 'exit', 'q', 'help', 'delete']
+    return request.split(' ')[0] in ['add', 'scan', 'start', 'load', 'checkoff', 'save', '', 'bye', 'quit', 'exit', 'q', 'help', 'delete', 'display']
 
 
 def get_command(request):
@@ -184,6 +199,8 @@ def process_request(request, panoply):
             panoply.save()
         elif command == 'delete':
             print('Not implemented yet')
+        elif command == 'display':
+            panoply.display()
         elif command == 'help':
             print_help()
 
