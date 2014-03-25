@@ -1,9 +1,15 @@
+'''
+The Panoply class
+Manages everything about a task collection
+'''
+
 from __future__ import print_function
 import csv
 from Task import Task
 from commands import getstatusoutput
 from panlib import InvalidStateException
 from TasksCollection import TasksCollection
+
 
 class Panoply(object):
     def __init__(self):
