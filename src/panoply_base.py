@@ -80,7 +80,6 @@ class Panoply(object):
 
     def add(self):
         """ Add one task to the collection.
-        Can only add if the status is START, LOAD, CHECKOFF
         """
         print('Enter the task details: ', end='\n')
         task_info = raw_input()
@@ -91,16 +90,16 @@ class Panoply(object):
 
     def delete(self):
         """ Delete a given task from the collection.
-        Can only delete if the status is ADD, LOAD, CHECKOFF
         """
         print('Enter the description of the task to be deleted: ', end='\n')
         task_info = raw_input()
-        try:
-            self.task_collection.tasks.remove(task_info)
-            print('Task successfully deleted', end='\n')
-            self.save()
-        except ValueError:
-            print('Task not found in collection', end='\n')
+        for task in self.task_collection.tasks:
+            if task.task_info == task_info:
+                self.task_collection.tasks.remove(task)
+                print('Task successfully deleted', end='\n')
+                self.save()
+                return
+        print('Task not found in collection', end='\n')
 
     def scan(self):
         """ Scan the collection for any overdue tasks """
