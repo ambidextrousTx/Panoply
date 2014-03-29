@@ -16,10 +16,8 @@ class Panoply(object):
         self.task_collection_name = ''
         self.task_collection = ''
         self.user = ''
-        self.status = ''
 
     def start(self):
-        self.status = 'START'
         print('Enter the user name: ', end='\n')
         user = raw_input()
         print('Enter the task collection name: ', end='\n')
@@ -34,7 +32,6 @@ class Panoply(object):
     def load(self):
         """ Load contents of a previously saved file """
         """ Currently supporting only one file """
-        self.status = 'LOAD'
         # Reload everything from the file into the object
         self.task_collection_name = 'NewCollection'
         self.user = 'NewUser'
@@ -51,64 +48,62 @@ class Panoply(object):
     def checkoff(self):
         """ Check off a task from the collection as done """
         # Can only add if the status is LOAD or ADD or CHECKOFF
-        if self.status not in ['LOAD', 'ADD', 'CHECKOFF']:
-            raise InvalidStateException
-        else:
-            self.status = 'CHECKOFF'
-            print('What collection?', end='\n')
-            coll = raw_input()
-            print('Enter the task info to check off:', end='\n')
-            task = raw_input()
-            # Add logic to check if the task exists
-            # Sequential search for now
-            flag = False
-            with open('panoply_tasks.pan', 'r') as csvfile:
-                taskreader = csv.reader(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                for row in taskreader:
-                    task_coll = row[1]
-                    task_info = row[2]
-                    if task_coll == coll and task_info == task:
-                        print('\nFound the task!', end='\n')
-                        print('Checking off the task ... done', end='\n')
-                        flag = True
-                        break
-            if flag:
-                # Add logic to delete task
-                taskreader = csv.reader(open('panoply_tasks.pan', 'r'), delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                writer = csv.writer(open('corrected.csv', 'w'), delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                for row in taskreader:
-                    if not (row[1] == task_coll and row[2] == task_info):
-                        writer.writerow(row)
-                # Move old file to new
-                moved = getstatusoutput('mv corrected.csv panoply_tasks.pan')
+        print('What collection?', end='\n')
+        coll = raw_input()
+        print('Enter the task info to check off:', end='\n')
+        task = raw_input()
+        # Add logic to check if the task exists
+        # Sequential search for now
+        flag = False
+        with open('panoply_tasks.pan', 'r') as csvfile:
+            taskreader = csv.reader(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            for row in taskreader:
+                task_coll = row[1]
+                task_info = row[2]
+                if task_coll == coll and task_info == task:
+                    print('\nFound the task!', end='\n')
+                    print('Checking off the task ... done', end='\n')
+                    flag = True
+                    break
+        if flag:
+            # Add logic to delete task
+            taskreader = csv.reader(open('panoply_tasks.pan', 'r'), delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            writer = csv.writer(open('corrected.csv', 'w'), delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            for row in taskreader:
+                if not (row[1] == task_coll and row[2] == task_info):
+                    writer.writerow(row)
+            # Move old file to new
+            moved = getstatusoutput('mv corrected.csv panoply_tasks.pan')
 
-            else:
-                print('Task not found!')
+        else:
+            print('Task not found!')
 
     def add(self):
         """ Add one task to the collection.
         Can only add if the status is START, LOAD, CHECKOFF
         """
-        if self.status not in ['START', 'LOAD', 'CHECKOFF']:
-            raise InvalidStateException
-        else:
-            self.status = 'ADD'
-            print('Enter the task details: ', end='\n')
-            task_info = raw_input()
-            print('Enter the date (yyyy,mm,dd): ', end='\n')
-            date = raw_input()
-            self.task_collection.add(Task(',,{0},{1}'.format(task_info, date)))
-            self.save()
+        print('Enter the task details: ', end='\n')
+        task_info = raw_input()
+        print('Enter the date (yyyy,mm,dd): ', end='\n')
+        date = raw_input()
+        self.task_collection.add(Task(',,{0},{1}'.format(task_info, date)))
+        self.save()
 
     def delete(self):
         """ Delete a given task from the collection.
-        Can only delete if the status is ADD?
+        Can only delete if the status is ADD, LOAD, CHECKOFF
         """
-        pass
+        print('Enter the description of the task to be deleted: ', end='\n')
+        task_info = raw_input()
+        try:
+            self.task_collection.tasks.remove(task_info)
+            print('Task successfully deleted', end='\n')
+            self.save()
+        except ValueError:
+            print('Task not found in collection', end='\n')
 
     def scan(self):
         """ Scan the collection for any overdue tasks """
-        self.status = 'SCAN'
         overdue_tasks = self.task_collection.scan()
         if len(overdue_tasks) == 0:
             print('\nCongratulations, no tasks overdue!', end="\n")
@@ -120,7 +115,7 @@ class Panoply(object):
     def display(self):
         ''' Just displays the contents of the currently loaded or used
         collection '''
-        if self.status not in ['LOAD', 'ADD', 'SCAN', 'CHECKOFF']:
+        if len(self.task_collection.tasks) == 0:
             print('\nNothing to display yet.', end='\n')
         else:
             for task in self.task_collection.tasks:
@@ -136,7 +131,7 @@ class Panoply(object):
         """ Save the current task collection on disk """
         with open('panoply_tasks.pan', 'w') as csvfile:
             taskwriter = csv.writer(csvfile, delimiter=',',
-                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for task in self.task_collection.tasks:
                 taskwriter.writerow([self.user, self.task_collection_name, task.task_info, task.year, task.month, task.day])
         print('\nDone saving to file panoply_tasks.pan', end='\n')

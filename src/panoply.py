@@ -62,7 +62,7 @@ def process_request(request, panoply):
         elif command == 'save':
             panoply.save()
         elif command == 'delete':
-            print('Not implemented yet')
+            panoply.delete()
         elif command == 'display':
             panoply.display()
         elif command == 'help':
