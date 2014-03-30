@@ -1,13 +1,20 @@
 import unittest
 import sys
 sys.path.append('../src/')
-from panoply import Panoply
+from panoply_base import Panoply
+import panoply
 
 
 class PanoplyTest(unittest.TestCase):
-    def test_start(self):
-        p = Panoply()
-        self.assertEqual(p.start('guest', 'sample'), 'I am the start method')
+    def setUp(self):
+        pass
+
+    def test_sanity(self):
+        self.assertFalse(panoply.sanity_check('random string'))
+
+    def tearDown(self):
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()

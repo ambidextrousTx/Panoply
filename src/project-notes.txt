@@ -1,5 +1,6 @@
-- needs delete functionality - added stub
 - needs to use the calendar module
-- needs major refactoring
 - better handling of collections, users, and the saved file - one file per user?
-- better handling of the various states LOAD, START, CHECKOFF, etc.
+- reintroduction and better handling of the various states LOAD, START, CHECKOFF, etc.?
+- start TDD, midway but surely
+
+- needs major refactoring?
