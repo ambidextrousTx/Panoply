@@ -15,17 +15,18 @@ import sys
 
 PANOPLY_VERSION = '0.1'
 
+
 def print_greeting():
     print('Welcome to Panoply version {0}'.format(PANOPLY_VERSION), end='\n')
-    print('Created by Ravi Sinha during the summer of 2013', end='\n')
+    print('Created by Ravi Sinha', end='\n')
     print('You can create tasks or task collections, and see which ones '
             'are overdue.', end='\n')
-    print('It is possible to save a collection and also load it later',
-            end='\n')
-    print('You can also check some tasks off as being finished.', end='\n')
+    print('You can check tasks off as finished.', end='\n')
+    print('You can save collections and load them later.', end='\n')
+
 
 def print_help():
-    print('Supported commands: start, load, add, delete, scan, checkoff, save, help', end='\n')
+    print('Supported commands: start, load, display, add, delete, scan, checkoff, save, help', end='\n')
     print('Press <Enter> by itself or enter quit, exit, etc. to exit.', end='\n')
 
 
