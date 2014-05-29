@@ -33,21 +33,31 @@ class Panoply(object):
         """ Load contents of a previously saved file """
         """ Currently supporting only one file """
         # Reload everything from the file into the object
-        self.task_collection_name = 'NewCollection'
-        self.user = 'NewUser'
-        self.task_collection = TasksCollection(self.task_collection_name, self.user)
+        # self.task_collection_name = 'NewCollection'
+        # self.user = 'NewUser'
+        # self.task_collection = TasksCollection(self.task_collection_name, self.user)
+        loaded_tasks_details_list = []
         with open('panoply_tasks.pan', 'r') as csvfile:
             taskreader = csv.reader(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             # Loading tasks from file into object and printing
             for row in taskreader:
-                print(', '.join(row), end='\n')
-                self.task_collection.add(Task(','.join(row)))
+                joined_row = ','.join(row)
+                print(joined_row, end='\n')
+                loaded_tasks_details_list.append(joined_row)
+
+                # self.task_collection.add(Task(','.join(row)))
+
+        self.user = loaded_tasks_details_list[0].split(',')[0]
+        self.task_collection_name = loaded_tasks_details_list[0].split(',')[1]
+        self.task_collection = TasksCollection(self.task_collection_name, self.user)
+
+        for row in loaded_tasks_details_list:
+            self.task_collection.add(Task(row))
 
         print('\nDone loading from file panoply_tasks.pan', end='\n')
 
     def checkoff(self):
         """ Check off a task from the collection as done """
-        # Can only add if the status is LOAD or ADD or CHECKOFF
         print('What collection?', end='\n')
         coll = raw_input()
         print('Enter the task info to check off:', end='\n')
@@ -81,6 +91,9 @@ class Panoply(object):
     def add(self):
         """ Add one task to the collection.
         """
+        # Check if a task collection has been loaded
+        print(self.user, end='\n') 
+        print(self.task_collection_name, end='\n')
         print('Enter the task details: ', end='\n')
         task_info = raw_input()
         print('Enter the date (yyyy,mm,dd): ', end='\n')
