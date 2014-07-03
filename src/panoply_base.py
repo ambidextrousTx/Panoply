@@ -73,6 +73,7 @@ class Panoply(object):
                 if task_coll == coll and task_info == task:
                     print('\nFound the task!', end='\n')
                     print('Checking off the task ... done', end='\n')
+                    task.status = 'checked off'
                     flag = True
                     break
         if flag:
@@ -137,7 +138,8 @@ class Panoply(object):
                 print(task.task_info, end=',')
                 print(task.year, end=',')
                 print(task.month, end=',')
-                print(task.day, end='\n')
+                print(task.day, end=',')
+                print(task.status, end='\n')
 
     def save(self):
         """ Save the current task collection on disk """
