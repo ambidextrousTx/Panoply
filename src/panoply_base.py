@@ -7,8 +7,8 @@ from __future__ import print_function
 import csv
 from Task import Task
 from commands import getstatusoutput
-from panlib import InvalidStateException
 from TasksCollection import TasksCollection
+import panoply_helpers
 
 
 class Panoply(object):
@@ -122,8 +122,10 @@ class Panoply(object):
             print('\nCongratulations, no tasks overdue!', end="\n")
         else:
             print('\nSeems like you need to hustle!', end='\n')
+            print('Here are your overdue tasks', end='\n')
             for task in overdue_tasks:
-                print('{0}'.format(task.task_info), end='\n')
+            	late_by_days = panoply_helpers.compute_late_days(task)
+                print('{0}, overdue {1} days'.format(task.task_info, late_by_days), end='\n')
 
     def display(self):
         ''' Just displays the contents of the currently loaded or used
