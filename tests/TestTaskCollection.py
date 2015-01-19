@@ -18,9 +18,9 @@ class TestTaskCollection(unittest.TestCase):
         global tasks
         global task_details_obtained
         user = 'Ravi Sinha'
-        task = 'Do Laundry,2013,4,25'
+        task = 'Ravi,Random,Do Laundry,2013,4,25'
         name = 'TestTask'
-        tasks = TasksCollection(name)
+        tasks = TasksCollection(name, user)
         task_details_obtained = Task(task)
 
     def test_constuctor(self):
