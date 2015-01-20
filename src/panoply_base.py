@@ -73,7 +73,6 @@ class Panoply(object):
                 if task_coll == coll and task_info == task:
                     print('\nFound the task!', end='\n')
                     print('Checking off the task ... done', end='\n')
-                    task.status = 'checked off'
                     flag = True
                     break
         if flag:
@@ -130,6 +129,7 @@ class Panoply(object):
     def display(self):
         ''' Just displays the contents of the currently loaded or used
         collection '''
+        self.load()
         if len(self.task_collection.tasks) == 0:
             print('\nNothing to display yet.', end='\n')
         else:
