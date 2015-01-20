@@ -12,12 +12,16 @@ import panoply_helpers
 
 
 class Panoply(object):
+    ''' The base class for Panoply
+    '''
     def __init__(self):
         self.task_collection_name = ''
         self.task_collection = ''
         self.user = ''
 
     def start(self):
+        ''' Establish user, task collection, etc.
+        '''
         print('Enter the user name: ', end='\n')
         user = raw_input()
         print('Enter the task collection name: ', end='\n')
@@ -26,16 +30,12 @@ class Panoply(object):
         self.task_collection_name = task
         self.task_collection = TasksCollection(task, user)
 
-        response = 'Created a new collection {0} for user {1}'.format(task, user)
+        response = 'Created a new collection {0} for user {1}'.format(task,user)
         print(response)
 
     def load(self):
-        """ Load contents of a previously saved file """
-        """ Currently supporting only one file """
-        # Reload everything from the file into the object
-        # self.task_collection_name = 'NewCollection'
-        # self.user = 'NewUser'
-        # self.task_collection = TasksCollection(self.task_collection_name, self.user)
+        ''' Load contents of a previously saved file
+        Currently supporting only one file '''
         loaded_tasks_details_list = []
         with open('panoply_tasks.pan', 'r') as csvfile:
             taskreader = csv.reader(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -44,8 +44,6 @@ class Panoply(object):
                 joined_row = ','.join(row)
                 print(joined_row, end='\n')
                 loaded_tasks_details_list.append(joined_row)
-
-                # self.task_collection.add(Task(','.join(row)))
 
         self.user = loaded_tasks_details_list[0].split(',')[0]
         self.task_collection_name = loaded_tasks_details_list[0].split(',')[1]
@@ -57,7 +55,7 @@ class Panoply(object):
         print('\nDone loading from file panoply_tasks.pan', end='\n')
 
     def checkoff(self):
-        """ Check off a task from the collection as done """
+        ''' Check off a task from the collection as done '''
         print('What collection?', end='\n')
         coll = raw_input()
         print('Enter the task info to check off:', end='\n')
@@ -76,23 +74,23 @@ class Panoply(object):
                     flag = True
                     break
         if flag:
-            # Add logic to delete task
+            # Delete the task
             taskreader = csv.reader(open('panoply_tasks.pan', 'r'), delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             writer = csv.writer(open('corrected.csv', 'w'), delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for row in taskreader:
                 if not (row[1] == task_coll and row[2] == task_info):
                     writer.writerow(row)
             # Move old file to new
-            moved = getstatusoutput('mv corrected.csv panoply_tasks.pan')
+            getstatusoutput('mv corrected.csv panoply_tasks.pan')
 
         else:
             print('Task not found!')
 
     def add(self):
-        """ Add one task to the collection.
-        """
+        ''' Add one task to the collection.
+        '''
         # Check if a task collection has been loaded
-        print(self.user, end='\n') 
+        print(self.user, end='\n')
         print(self.task_collection_name, end='\n')
         print('Enter the task details: ', end='\n')
         task_info = raw_input()
@@ -123,7 +121,7 @@ class Panoply(object):
             print('\nSeems like you need to hustle!', end='\n')
             print('Here are your overdue tasks', end='\n')
             for task in overdue_tasks:
-            	late_by_days = panoply_helpers.compute_late_days(task)
+                late_by_days = panoply_helpers.compute_late_days(task)
                 print('{0}, overdue {1} days'.format(task.task_info, late_by_days), end='\n')
 
     def display(self):

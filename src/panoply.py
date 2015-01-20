@@ -17,30 +17,39 @@ PANOPLY_VERSION = '0.1'
 
 
 def print_greeting():
+    ''' Print beginning greeting and version information
+    '''
     print('Welcome to Panoply version {0}'.format(PANOPLY_VERSION), end='\n')
     print('Created by Ravi Sinha', end='\n')
     print('You can create tasks or task collections, and see which ones '
-            'are overdue.', end='\n')
+          'are overdue.', end='\n')
     print('You can check tasks off as finished.', end='\n')
     print('You can save collections and load them later.', end='\n')
 
 
 def print_help():
+    ''' Prints help. Can be called anytime
+    '''
     print('Supported commands: start, load, display, add, delete, scan, checkoff, save, help', end='\n')
     print('Press <Enter> by itself or enter quit, exit, etc. to exit.', end='\n')
 
 
 def sanity_check(request):
-    """ For now, see if the first word corresponds to one of the supported
-    operations """
+    ''' For now, see if the first word corresponds to one of the supported
+    operations '''
     return request.split(' ')[0] in ['add', 'scan', 'start', 'load', 'checkoff', 'save', '', 'bye', 'quit', 'exit', 'q', 'help', 'delete', 'display']
 
 
 def get_command(request):
+    ''' Logical encapsulation: returns the command requested
+    '''
     return request.split(' ')[0]
 
 
 def process_request(request, panoply):
+    ''' Switches over the command requested and performs
+    relevant operation
+    '''
     if not sanity_check(request):
         print('I cannot handle that.', end='\n')
         sys.exit(1)
@@ -71,6 +80,8 @@ def process_request(request, panoply):
 
 
 def run_repl():
+    ''' Continuously run the Panoply REPL until
+    called off '''
     request = 'X'
     panoply = Panoply()
     while request not in ['', 'exit', 'quit', 'q', 'bye']:
@@ -83,6 +94,8 @@ def run_repl():
 
 
 def main():
+    ''' Here's where everything starts
+    '''
     print_greeting()
     print_help()
     run_repl()
