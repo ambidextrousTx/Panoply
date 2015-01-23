@@ -14,6 +14,6 @@ def compute_late_days(task):
     '''
     currdate = date.today()
     # Months are counted from 1 in most libraries
-    origdate = date(int(task.year), int(task.month) + 1, int(task.day))
+    origdate = date(int(task.year), int(task.month), int(task.day))
     delta = currdate - origdate
     return str(delta.days)
