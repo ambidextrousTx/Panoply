@@ -1,5 +1,11 @@
+Features
+	- uses the datetime module
+
+New Features TODO
+	- ability to associate new file names with a new user/collection pair
+
+TODO
 - add new status ('checked off', 'active') in the task description
-- needs to use the calendar module
 - better handling of collections, users, and the saved file - one file per user?
 - reintroduction and better handling of the various states LOAD, START, CHECKOFF, etc.?
 - start TDD, midway but surely
