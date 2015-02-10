@@ -42,7 +42,6 @@ class Panoply(object):
             # Loading tasks from file into object and printing
             for row in taskreader:
                 joined_row = ','.join(row)
-                print(joined_row, end='\n')
                 loaded_tasks_details_list.append(joined_row)
 
         self.user = loaded_tasks_details_list[0].split(',')[0]
@@ -90,8 +89,6 @@ class Panoply(object):
         ''' Add one task to the collection.
         '''
         # Check if a task collection has been loaded
-        print(self.user, end='\n')
-        print(self.task_collection_name, end='\n')
         print('Enter the task details: ', end='\n')
         task_info = raw_input()
         print('Enter the date (yyyy,mm,dd): ', end='\n')
