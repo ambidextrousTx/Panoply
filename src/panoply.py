@@ -51,8 +51,8 @@ def process_request(request, panoply):
     relevant operation
     '''
     if not sanity_check(request):
-        print('I cannot handle that.', end='\n')
-        sys.exit(1)
+        print('I cannot handle that. Please refer to the help.', end='\n')
+        print_help()
     else:
         command = get_command(request)
         print('Command received: {0}'.format(command), end='\n')
