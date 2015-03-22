@@ -13,7 +13,7 @@ class TestTask(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         global task_details_obtained
-        task = ',,Do Laundry,2013,4,25'
+        task = ',,Do Laundry,2013,4,25,active'
         task_details_obtained = Task(task)
 
     def test_constructor_string(self):
@@ -22,6 +22,7 @@ class TestTask(unittest.TestCase):
         self.assertEqual(task_details_obtained.year, '2013')
         self.assertEqual(task_details_obtained.month, '4')
         self.assertEqual(task_details_obtained.day, '25')
+        self.assertEqual(task_details_obtained.status, 'active')
 
     def test_str_repr(self):
         """ Test the string representation of the task """
@@ -37,7 +38,7 @@ class TestTask(unittest.TestCase):
 
     def test_overdue_negative(self):
         """ Test when not overdue """
-        task = ',,Fly to Moon,9999,4,25'
+        task = ',,Fly to Moon,9999,4,25,active'
         task_details_obtained = Task(task)
         self.assertFalse(task_details_obtained.is_overdue())
 

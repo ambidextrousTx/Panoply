@@ -18,7 +18,7 @@ class Task(object):
         self.year = items[3]
         self.month = items[4]
         self.day = items[5]
-        self.status = 'active'
+        self.status = items[6]
 
     def __str__(self):
         return 'Task {0}, due {1}-{2}-{3}'.format(self.task_info, self.month, self.day, self.year) 
